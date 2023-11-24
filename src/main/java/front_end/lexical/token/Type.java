@@ -1,6 +1,6 @@
-package front_end.token;
+package front_end.lexical.token;
 
-public enum Token {
+public enum Type {
     IDENTIFIER,
     KEYWORD,
     SEPARATOR,

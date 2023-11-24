@@ -1,22 +1,22 @@
-package front_end.lexeme;
+package front_end.lexical.table;
 
-import front_end.token.Token;
+import front_end.lexical.token.Type;
 
-public class Lexeme {
+public class Token {
 
-    public Lexeme(Token type, String content) {
+    public Token(Type type, String content) {
         this.type = type;
         this.content = content;
     }
 
-    private Token type;
+    private Type type;
     private String content;
 
-    public Token getType() {
+    public Type getType() {
         return type;
     }
 
-    public void setType(Token type) {
+    public void setType(Type type) {
         this.type = type;
     }
 

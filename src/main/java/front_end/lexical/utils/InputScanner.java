@@ -1,4 +1,4 @@
-package front_end.utils;
+package front_end.lexical.utils;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
@@ -8,13 +8,13 @@ import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import front_end.token.SupportedTokens;
+import front_end.lexical.token.SupportedTypes;
 
 public class InputScanner {
 
     /**
      * Escaneia o código e separa as palavras em cada token suportada.
-     * As palavras chaves suportadas podem ser encontradas em {@link SupportedTokens}.
+     * As palavras chaves suportadas podem ser encontradas em {@link SupportedTypes}.
      * @param path O caminho para o arquivo a ser escaneado.
      * @return Lista com cada token suportada.
      */
@@ -28,7 +28,7 @@ public class InputScanner {
         while ((character = reader.read()) != -1) {
             char x = (char) character;
 
-            if (isSpecialCharacter(x)) {
+            if (isOperator(x)) {
                 saveStringIfAny(stringBuilder, response);
                 response.add(String.valueOf(x));
 
@@ -56,13 +56,13 @@ public class InputScanner {
     }
 
     /** Determina se o caractere é um separador ou um operador.
-     * Separadores e operadores suportados podem ser vistos em {@link SupportedTokens}.
+     * Separadores e operadores suportados podem ser vistos em {@link SupportedTypes}.
      * 
      * @param x Caractere a ser analisado
-     * @return Verdadeiro se é um separador ou operador; falso caso contrário.
+     * @return Verdadeiro se é um separador; falso caso contrário.
      */
-    private static boolean isSpecialCharacter(char x) {
-        String regex = SupportedTokens.separators + SupportedTokens.operators;
+    private static boolean isOperator(char x) {
+        String regex = SupportedTypes.operators;
 
         Pattern pattern = Pattern.compile(regex);
         Matcher matcher = pattern.matcher(String.valueOf(x));
