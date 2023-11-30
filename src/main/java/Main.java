@@ -10,7 +10,7 @@ import front_end.semantic.parser.Semantic;
 
 public class Main {
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws Exception {
         try {
             // Lexical analysis
             List<String> tokens = InputScanner.scan("/home/dickmann/Documents/code.txt");
