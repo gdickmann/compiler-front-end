@@ -4,8 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Pattern;
 
-import front_end.lexical.token.SupportedTypes;
-import front_end.lexical.token.Type;
+import front_end.token.SupportedTypes;
+import front_end.token.Type;
 
 public class TableBuilder {
 
@@ -17,8 +17,9 @@ public class TableBuilder {
         List<Token> response = new ArrayList<Token>();
 
         Pattern k = Pattern.compile(SupportedTypes.keywords);
-        Pattern o = Pattern.compile(SupportedTypes.operators);
+        Pattern o = Pattern.compile(SupportedTypes.operator);
         Pattern c = Pattern.compile(SupportedTypes.comment);
+        Pattern s = Pattern.compile(SupportedTypes.separator);
         
         for (String token : tokens) {
             if (k.matcher(token).matches()) {
@@ -31,6 +32,10 @@ public class TableBuilder {
             }
             if (c.matcher(token).matches()) {
                 response.add(new Token(Type.COMMENT, token));
+                continue;
+            }
+            if (s.matcher(token).matches()) {
+                response.add(new Token(Type.SEPARATOR, token));
                 continue;
             }
             response.add(new Token(Type.LITERAL, token));

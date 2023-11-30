@@ -1,4 +1,4 @@
-package front_end.lexical.token;
+package front_end.token;
 
 public enum Type {
     IDENTIFIER,

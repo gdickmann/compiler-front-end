@@ -1,6 +1,6 @@
 package front_end.lexical.table;
 
-import front_end.lexical.token.Type;
+import front_end.token.Type;
 
 public class Token {
 

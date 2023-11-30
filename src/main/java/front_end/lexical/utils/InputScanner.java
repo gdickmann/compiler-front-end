@@ -8,7 +8,7 @@ import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import front_end.lexical.token.SupportedTypes;
+import front_end.token.SupportedTypes;
 
 public class InputScanner {
 
@@ -28,7 +28,7 @@ public class InputScanner {
         while ((character = reader.read()) != -1) {
             char x = (char) character;
 
-            if (isOperator(x)) {
+            if (isOperatorOrSeparator(x)) {
                 saveStringIfAny(stringBuilder, response);
                 response.add(String.valueOf(x));
 
@@ -55,18 +55,22 @@ public class InputScanner {
         }
     }
 
-    /** Determina se o caractere é um separador ou um operador.
+    /** Determina se o caractere é um operador ou separador.
      * Separadores e operadores suportados podem ser vistos em {@link SupportedTypes}.
      * 
      * @param x Caractere a ser analisado
      * @return Verdadeiro se é um separador; falso caso contrário.
      */
-    private static boolean isOperator(char x) {
-        String regex = SupportedTypes.operators;
+    private static boolean isOperatorOrSeparator(char x) {
+        String operator = SupportedTypes.operator;
+        String separator = SupportedTypes.separator;
 
-        Pattern pattern = Pattern.compile(regex);
-        Matcher matcher = pattern.matcher(String.valueOf(x));
+        Pattern oPattern = Pattern.compile(operator);
+        Matcher operatorMatcher = oPattern.matcher(String.valueOf(x));
 
-        return matcher.matches();
+        Pattern sPattern = Pattern.compile(separator);
+        Matcher separatorMatcher = sPattern.matcher(String.valueOf(x));
+
+        return operatorMatcher.matches() || separatorMatcher.matches();
     }
 }

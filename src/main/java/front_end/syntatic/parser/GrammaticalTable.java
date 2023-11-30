@@ -1,6 +1,6 @@
 package front_end.syntatic.parser;
 
-import front_end.lexical.token.Type;
+import front_end.token.Type;
 
 public class GrammaticalTable {
     /*
@@ -10,5 +10,5 @@ public class GrammaticalTable {
         operator ::= '='
     */
     // Cada índice corresponde a sequência permitida.
-    public static Type[] declaration = new Type[] { Type.KEYWORD, Type.LITERAL, Type.OPERATOR, Type.LITERAL };
+    public static Type[] declaration = new Type[] { Type.KEYWORD, Type.LITERAL, Type.OPERATOR, Type.LITERAL, Type.SEPARATOR };
 }
