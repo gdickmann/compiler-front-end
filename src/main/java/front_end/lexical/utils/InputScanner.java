@@ -62,15 +62,24 @@ public class InputScanner {
      * @return Verdadeiro se é um separador; falso caso contrário.
      */
     private static boolean isOperatorOrSeparator(char x) {
-        String operator = SupportedTypes.operator;
-        String separator = SupportedTypes.separator;
-
-        Pattern oPattern = Pattern.compile(operator);
+        Pattern oPattern = Pattern.compile(SupportedTypes.operator);
         Matcher operatorMatcher = oPattern.matcher(String.valueOf(x));
 
-        Pattern sPattern = Pattern.compile(separator);
+        Pattern sPattern = Pattern.compile(SupportedTypes.separator);
         Matcher separatorMatcher = sPattern.matcher(String.valueOf(x));
 
-        return operatorMatcher.matches() || separatorMatcher.matches();
+        Pattern op = Pattern.compile(SupportedTypes.openParenthesis);
+        Matcher opMatcher = op.matcher(String.valueOf(x));
+
+        Pattern cp = Pattern.compile(SupportedTypes.closedParenthesis);
+        Matcher cpMatcher = cp.matcher(String.valueOf(x));
+
+        Pattern ob = Pattern.compile(SupportedTypes.openBrackets);
+        Matcher obMatcher = ob.matcher(String.valueOf(x));
+
+        Pattern cb = Pattern.compile(SupportedTypes.closedBrackets);
+        Matcher cbMatcher = cb.matcher(String.valueOf(x));
+
+        return operatorMatcher.matches() || separatorMatcher.matches() || opMatcher.matches() || cpMatcher.matches() || obMatcher.matches() || cbMatcher.matches();
     }
 }

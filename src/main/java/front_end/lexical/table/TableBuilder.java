@@ -20,6 +20,12 @@ public class TableBuilder {
         Pattern o = Pattern.compile(SupportedTypes.operator);
         Pattern c = Pattern.compile(SupportedTypes.comment);
         Pattern s = Pattern.compile(SupportedTypes.separator);
+
+        Pattern op = Pattern.compile(SupportedTypes.openParenthesis);
+        Pattern cp = Pattern.compile(SupportedTypes.closedParenthesis);
+
+        Pattern ob = Pattern.compile(SupportedTypes.openBrackets);
+        Pattern cb = Pattern.compile(SupportedTypes.closedBrackets);
         
         for (String token : tokens) {
             if (k.matcher(token).matches()) {
@@ -36,6 +42,22 @@ public class TableBuilder {
             }
             if (s.matcher(token).matches()) {
                 response.add(new Token(Type.SEPARATOR, token));
+                continue;
+            }
+            if (op.matcher(token).matches()) {
+                response.add(new Token(Type.OPEN_PARENTHESIS, token));
+                continue;
+            }
+            if (cp.matcher(token).matches()) {
+                response.add(new Token(Type.CLOSED_PARENTHESIS, token));
+                continue;
+            }
+            if (ob.matcher(token).matches()) {
+                response.add(new Token(Type.OPEN_BRACKETS, token));
+                continue;
+            }
+            if (cb.matcher(token).matches()) {
+                response.add(new Token(Type.CLOSED_BRACKETS, token));
                 continue;
             }
             response.add(new Token(Type.LITERAL, token));

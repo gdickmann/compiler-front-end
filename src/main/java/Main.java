@@ -17,7 +17,7 @@ public class Main {
             List<Token> table = TableBuilder.build(tokens);
 
             // Both of them executes at the same time. Try to call them in a thread.
-            // Syntatic analysis
+
             try {
                 Syntatic.parse(table);
                 System.out.println("Código-fonte com sintaxe correta.");
@@ -33,8 +33,6 @@ public class Main {
                 throw e;
             }
 
-            // Semantic analysis
-            // TODO
         } catch (IOException e) {
             System.out.println("Um erro ocorreu ao ler o arquivo de texto fornecido.");
             e.printStackTrace();

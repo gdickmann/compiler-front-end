@@ -9,12 +9,14 @@ import front_end.token.Type;
 
 public class Semantic {
 
-    public static void parse(List<Token> table) throws Exception {
-        throwExceptionIfTypeMismatched(table);
+    public static void parse(List<Token> tokens) throws Exception {
+        throwExceptionIfIfStatementIsMismatched(tokens);
+        throwExceptionIfTypeMismatched(tokens);
+
     }
 
     private static void throwExceptionIfTypeMismatched(List<Token> table) throws Exception {
-        String content = table.get(table.size() - 2).getContent();
+        String content = table.get(3).getContent();
 
         for (Token token : table) {
             if (token.getType().equals(Type.KEYWORD)) {
@@ -69,5 +71,76 @@ public class Semantic {
                 }
             }
         }
+    }
+
+    public static void throwExceptionIfIfStatementIsMismatched(List<Token> tokens) throws Exception {
+        Integer ifStartAtIndex = null;
+        Integer ifEndsAtIndex = null;
+
+        for (int i = 0; i < tokens.size(); i++) {
+            if (tokens.get(i).getContent().equals("if")) {
+                ifStartAtIndex = i;
+            }
+            if (tokens.get(i).getType() == Type.CLOSED_BRACKETS) {
+                ifEndsAtIndex = i;
+            }
+        }
+
+        if (ifStartAtIndex == null && ifEndsAtIndex == null) return;
+
+        try {
+            if (!checkToken(tokens.get(ifStartAtIndex), Type.KEYWORD, "if")) {
+                throw new Exception("Sintaxe do if inválida.");
+            }
+            ifStartAtIndex++;
+
+            if (!checkToken(tokens.get(ifStartAtIndex), Type.OPEN_PARENTHESIS, "(")) {
+                throw new Exception("Sintaxe do if inválida.");
+            }
+            ifStartAtIndex++;
+
+            if (!checkToken(tokens.get(ifStartAtIndex), Type.LITERAL, null)) {
+                throw new Exception("Sintaxe do if inválida.");
+            }
+            ifStartAtIndex++;
+
+            if (!checkToken(tokens.get(ifStartAtIndex), Type.OPERATOR, null)) {
+                throw new Exception("Sintaxe do if inválida.");
+            }
+            ifStartAtIndex++;
+
+            if (!checkToken(tokens.get(ifStartAtIndex), Type.LITERAL, null)) {
+                throw new Exception("Sintaxe do if inválida.");
+            }
+            ifStartAtIndex++;
+
+            if (!checkToken(tokens.get(ifStartAtIndex), Type.CLOSED_PARENTHESIS, ")")) {
+                throw new Exception("Sintaxe do if inválida.");
+            }
+            ifStartAtIndex++;
+
+            if (!checkToken(tokens.get(ifStartAtIndex), Type.OPEN_BRACKETS, "{")) {
+                throw new Exception("Sintaxe do if inválida.");
+            }
+            ifStartAtIndex++;
+
+
+            // Verifica se o próximo token é '}'
+            if (!checkToken(tokens.get(ifStartAtIndex), Type.CLOSED_BRACKETS, "}")) {
+                throw new Exception("Sintaxe do if inválida.");
+            }
+        } catch (Exception e) {
+            System.out.println("A sintáxe do if está incorreta.");
+            throw e;
+        }
+
+        
+
+        // Se chegamos até aqui, a expressão 'if' é válida
+    }
+
+    // Função auxiliar para verificar um token específico
+    private static boolean checkToken(Token token, Type expectedType, String expectedValue) {
+        return (token.getType() == expectedType) && (expectedValue == null || token.getContent().equals(expectedValue));
     }
 }
